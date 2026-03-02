@@ -12,11 +12,11 @@ It reflects architectural reasoning, operational validation, high availability d
 
 ### 📊 Azure Portal – Complete Deployment View
 
-![Azure Deployment](architecture/images/Azure-Deployment.png)
+![Azure Deployment](/images/Azure-Deployment.png)
 
 ### 🌐 Virtual Network Topology
 
-![VNet Topology](architecture/images/VNet-Topology.jpeg)
+![VNet Topology](/images/VNet-Topology.jpeg)
 
 ---
 
