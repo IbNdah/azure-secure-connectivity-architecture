@@ -16,7 +16,7 @@ It reflects architectural reasoning, operational validation, high availability d
 
 ### 🌐 Virtual Network Topology
 
-![VNet Topology](/images/VNet-Topology.jpeg)
+![VNet Topology](/images/VNet-Topology.png)
 
 ---
 
