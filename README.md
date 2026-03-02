@@ -12,11 +12,11 @@ It reflects architectural reasoning, operational validation, high availability d
 
 ### 📊 Azure Portal – Complete Deployment View
 
-![Azure Deployment](architecture/images/azure-architecture.png)
+![Azure Deployment](architecture/images/Azure-Deployment.png)
 
 ### 🌐 Virtual Network Topology
 
-![VNet Topology](architecture/images/vnet-secure-se.jpeg)
+![VNet Topology](architecture/images/VNet-Topology.jpeg)
 
 ---
 
@@ -244,3 +244,4 @@ However, enterprise-grade security requires:
 - Centralized monitoring  
 
 The architecture is suitable for lab validation and can evolve toward production readiness with structured enhancements.
+
