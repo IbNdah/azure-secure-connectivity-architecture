@@ -26,7 +26,7 @@ resource vnet 'Microsoft.Network/virtualNetworks@2023-05-01' = {
       {
         name: bastionSubnetName
         properties: {
-          addressPrefix: '10.0.2.0/27'
+          addressPrefix: '10.0.2.0/26'
         }
       }
     ]
