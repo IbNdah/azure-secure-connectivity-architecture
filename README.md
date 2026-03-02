@@ -108,3 +108,13 @@ User → Azure Bastion → VM (Private IP only)
 - Load Balancer isolation layer is critical
 - Bastion reduces exposed attack vectors
 - Zone awareness impacts design choices
+
+## 📊 Azure Portal Topology
+
+### Full Deployment Overview
+
+![Azure Deployment](architecture/images/azure-architecture.png)
+
+### Virtual Network Topology
+
+![VNet Topology](architecture/images/vnet-secure-se.jpeg)
