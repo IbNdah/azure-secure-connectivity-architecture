@@ -14,11 +14,11 @@ The architecture focuses on three key objectives:
 
 ## 🏗 Architecture Overview
 
-### Deployment
+### High-Level Deployment(Azure Portal)
 
 ![Azure Deployment](diagrams/Azure-Deployment.png)
 
-### Network Topology
+### Network Topology (Azure Vnet View)
 
 ![VNet Topology](diagrams/VNet-Topology.png)
 
