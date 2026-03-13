@@ -2,29 +2,63 @@
 
 ## Overview
 
-This project demonstrates a secure and highly available infrastructure architecture on Microsoft Azure, implemented using Infrastructure as Code with Terraform.
+This project demonstrates a **secure and highly available Azure infrastructure architecture**, implemented using **Infrastructure as Code with Terraform**.
 
 The architecture focuses on three key objectives:
 
 * Secure administrative access without exposing virtual machines
-* High availability using multi-zone deployment
-* Controlled public exposure through a centralized entry point
+* High availability using **multi-zone deployment**
+* Controlled public exposure through a **centralized entry point**
 
 ---
 
-## 🏗 Architecture Overview
+# 🏗 Architecture Overview
 
-### High-Level Deployment(Azure Portal)
+### High-Level Deployment (Azure Portal)
 
 ![Azure Deployment](diagrams/Azure-Deployment.png)
 
-### Network Topology (Azure Vnet View)
+### Network Topology (Azure VNet View)
 
 ![VNet Topology](diagrams/VNet-Topology.png)
 
 ---
 
-## Core Components
+# 🧠 Architecture Walkthrough
+
+## Public Traffic Flow
+
+External traffic enters the infrastructure through a **Public Azure Load Balancer**.
+
+Traffic flow:
+
+Internet → Load Balancer → Backend Virtual Machines
+
+The load balancer distributes incoming traffic across virtual machines deployed in different availability zones, providing:
+
+* Improved availability
+* Resilience to zone failures
+* Basic load distribution across backend instances
+
+---
+
+## Administrative Access
+
+Administrative access to the virtual machines is secured using **Azure Bastion**.
+
+Access flow:
+
+Administrator → Azure Bastion → Private Virtual Machines
+
+Benefits of this model:
+
+* No direct SSH exposure to the Internet
+* Reduced attack surface
+* Centralized administrative access point
+
+---
+
+# Core Components
 
 | Component              | Purpose                      |
 | ---------------------- | ---------------------------- |
@@ -34,8 +68,10 @@ The architecture focuses on three key objectives:
 | Public Load Balancer   | Single public entry point    |
 | Network Security Group | Traffic filtering            |
 | Multi-Zone VMs         | High availability            |
+
 ---
-## 🧠 Logical Architecture
+
+# 🧠 Logical Architecture
 
 ```mermaid
 flowchart TB
@@ -64,9 +100,9 @@ Bastion --> VM2
 
 ---
 
-## 🔐 Security Model
+# 🔐 Security Model
 
-The architecture follows a defense-in-depth approach:
+The architecture follows a **defense-in-depth approach**:
 
 * No public IP assigned to virtual machines
 * Bastion-based administrative access
@@ -79,35 +115,93 @@ Public exposure is limited to:
 | ------------- | ---- | --------------------- |
 | Load Balancer | 80   | Application traffic   |
 | Bastion       | 443  | Secure administration |
----
-## ⚙️ Infrastructure as Code
-
-Infrastructure deployment is implemented using Terraform.
-
-The repository also includes an earlier Bicep implementation for comparison.
 
 ---
 
-## 📂 Repository Structure
+# ⚙️ Infrastructure as Code
+
+Infrastructure deployment is implemented using **Terraform**.
+
+The repository also includes an earlier **Bicep implementation** for comparison between:
+
+* Azure-native IaC
+* Cloud-agnostic IaC
+
+---
+
+# 📂 Repository Structure
+
 ```
 docs/
   architecture/
   security/
   operations/
+  adr/
 
 diagrams/
 
 terraform/
+  modules/
+  environments/
 
 bicep/
 ```
 
 ---
 
-## 📖 Documentation
+# 🚀 Deployment
+
+Initialize Terraform:
+
+```
+terraform init
+```
+
+Validate configuration:
+
+```
+terraform validate
+```
+
+Generate execution plan:
+
+```
+terraform plan
+```
+
+Deploy infrastructure:
+
+```
+terraform apply
+```
+
+---
+
+# 📖 Documentation
+
 Detailed architecture analysis and security assessment are available in:
 
 ```
 docs/
 ```
 
+The documentation includes:
+
+* Architecture analysis
+* Security evaluation
+* Threat modeling
+* Operational troubleshooting
+* Architecture decision records (ADR)
+
+---
+
+# 🎯 Project Purpose
+
+This project demonstrates:
+
+* Cloud architecture design
+* Infrastructure as Code best practices
+* Secure administrative access patterns
+* High availability design in Azure
+
+It serves as a **cloud architecture case study and portfolio project**.
