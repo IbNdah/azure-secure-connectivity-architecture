@@ -31,7 +31,7 @@ module "compute" {
 
   backend_pool_id = module.loadbalancer.backend_pool_id
 
-  zones = ["1","2"]
+  zones = ["1", "2"]
 
   vm_size = "Standard_B2s"
 
