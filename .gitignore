@@ -1,0 +1,21 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+
+# Terraform variables
+*.tfvars
+!terraform.tfvars.example
+
+# SSH
+*.pem
+*.key
+id_rsa
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/

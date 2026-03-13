@@ -1,8 +1,15 @@
-# Security Analysis – Azure Secure Connectivity Architecture
+# Security Posture Analysis
 
 ## 🎯 Objective
 
-This document evaluates the security posture of the deployed infrastructure and identifies:
+## Scope
+
+This document evaluates the security posture of the deployed
+Azure infrastructure based on the current architecture design
+and implemented security controls.
+
+The analysis focuses on network exposure, administrative access,
+segmentation, and residual risks.
 
 - Attack surface exposure
 - Isolation layers

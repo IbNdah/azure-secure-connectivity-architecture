@@ -1,0 +1,5 @@
+location = "swedencentral"
+
+resource_group = "rg-secure-connectivity"
+
+ssh_public_key = "~/.ssh/id_rsa.pub"
