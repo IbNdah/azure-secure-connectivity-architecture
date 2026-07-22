@@ -1,73 +1,61 @@
-# 🔐 Azure Secure Connectivity Architecture
+# 🔐 Azure Secure Connectivity – Architecture Case Study
 
-## Overview
+## 🎯 Executive Summary
 
-This project demonstrates a **secure and highly available Azure infrastructure architecture**, implemented using **Infrastructure as Code with Terraform**.
+This project demonstrates the design and deployment of a secure Azure infrastructure using **Bicep** as the Infrastructure as Code solution.
 
-The architecture focuses on three key objectives:
+The architecture focuses on secure administrative access, high availability and controlled public exposure while applying cloud security best practices commonly used in enterprise environments.
 
-* Secure administrative access without exposing virtual machines
-* High availability using **multi-zone deployment**
-* Controlled public exposure through a **centralized entry point**
+---
+
+# 📌 Business Context
+
+Many enterprise workloads require virtual machines while minimizing their exposure to the Internet.
+
+This architecture explores how Azure networking and security services can be combined to provide secure administration, resilient connectivity and a scalable foundation for production-ready workloads.
+
+---
+
+# ☁ Azure Services Used
+
+- Azure Virtual Network
+- Azure Bastion
+- Azure Load Balancer
+- Azure Virtual Machines
+- Network Security Groups (NSG)
+- Availability Zones
+- Public IP
+- Resource Groups
+- Bicep (Infrastructure as Code)
 
 ---
 
 # 🏗 Architecture Overview
 
-### High-Level Deployment (Azure Portal)
+The infrastructure is deployed entirely using **Bicep**, Microsoft's native Infrastructure as Code language.
 
-![Azure Deployment](diagrams/Azure-Deployment.png)
+The solution follows a layered networking approach where public traffic is centralized through an Azure Load Balancer while administrative access is secured using Azure Bastion.
 
-### Network Topology (Azure VNet View)
+### Architecture Goals
 
-![VNet Topology](diagrams/VNet-Topology.png)
-
----
-
-# 🧠 Architecture Walkthrough
-
-## Public Traffic Flow
-
-External traffic enters the infrastructure through a **Public Azure Load Balancer**.
-
-Traffic flow:
-
-Internet → Load Balancer → Backend Virtual Machines
-
-The load balancer distributes incoming traffic across virtual machines deployed in different availability zones, providing:
-
-* Improved availability
-* Resilience to zone failures
-* Basic load distribution across backend instances
+- Secure remote administration
+- High availability across Availability Zones
+- Controlled public exposure
+- Network isolation
+- Repeatable infrastructure deployment
 
 ---
 
-## Administrative Access
+# 🏛 Architecture Principles
 
-Administrative access to the virtual machines is secured using **Azure Bastion**.
+The architecture is based on several fundamental cloud architecture principles:
 
-Access flow:
-
-Administrator → Azure Bastion → Private Virtual Machines
-
-Benefits of this model:
-
-* No direct SSH exposure to the Internet
-* Reduced attack surface
-* Centralized administrative access point
-
----
-
-# Core Components
-
-| Component              | Purpose                      |
-| ---------------------- | ---------------------------- |
-| Virtual Network        | Network isolation boundary   |
-| Application Subnet     | Hosts backend VMs            |
-| Azure Bastion          | Secure administrative access |
-| Public Load Balancer   | Single public entry point    |
-| Network Security Group | Traffic filtering            |
-| Multi-Zone VMs         | High availability            |
+- Security by Design
+- Infrastructure as Code
+- Defense in Depth
+- High Availability
+- Least Privilege Access
+- Network Segmentation
 
 ---
 
@@ -78,11 +66,12 @@ flowchart TB
 
 Internet((Internet))
 
-LB[Public Load Balancer]
+LB[Azure Load Balancer]
 
-subgraph VNet[vnet-secure]
+subgraph Azure_VNet["Azure Virtual Network"]
 
 VM1[VM Zone 1]
+
 VM2[VM Zone 2]
 
 Bastion[Azure Bastion]
@@ -90,118 +79,201 @@ Bastion[Azure Bastion]
 end
 
 Internet --> LB
+
 LB --> VM1
+
 LB --> VM2
 
-Admin((Admin User)) --> Bastion
+Admin((Administrator))
+
+Admin --> Bastion
+
 Bastion --> VM1
+
 Bastion --> VM2
 ```
 
 ---
 
-# 🔐 Security Model
+## 🔄 Traffic Flow
 
-The architecture follows a **defense-in-depth approach**:
+### Application Traffic
 
-* No public IP assigned to virtual machines
-* Bastion-based administrative access
-* Network Security Groups enforcing traffic filtering
-* Default deny inbound model
+Internet
 
-Public exposure is limited to:
+↓
 
-| Endpoint      | Port | Purpose               |
-| ------------- | ---- | --------------------- |
-| Load Balancer | 80   | Application traffic   |
-| Bastion       | 443  | Secure administration |
+Azure Load Balancer
+
+↓
+
+Virtual Machines
 
 ---
 
-# ⚙️ Infrastructure as Code
+### Administrative Traffic
 
-Infrastructure deployment is implemented using **Terraform**.
+Administrator
 
-The repository also includes an earlier **Bicep implementation** for comparison between:
+↓
 
-* Azure-native IaC
-* Cloud-agnostic IaC
+Azure Bastion
 
----
+↓
 
-# 📂 Repository Structure
-
-```
-docs/
-  architecture/
-  security/
-  operations/
-  adr/
-
-diagrams/
-
-terraform/
-  modules/
-  environments/
-
-bicep/
-```
+Private Virtual Machines
 
 ---
 
-# 🚀 Deployment
+# 📌 Core Components
 
-Initialize Terraform:
+| Component | Purpose |
+|-----------|---------|
+| Azure Virtual Network | Network isolation |
+| Application Subnet | Backend workload hosting |
+| Azure Bastion | Secure VM administration |
+| Azure Load Balancer | Centralized public entry point |
+| Network Security Group | Traffic filtering |
+| Availability Zones | High availability |
+| Bicep | Infrastructure provisioning |
 
-```
-terraform init
-```
+---
 
-Validate configuration:
+# 🔐 Security Assessment
 
-```
-terraform validate
-```
+Current Security Level
 
-Generate execution plan:
+**Production-inspired**
 
-```
-terraform plan
-```
+Implemented
 
-Deploy infrastructure:
+- No Public IP on Virtual Machines
+- Azure Bastion administration
+- Network Security Groups
+- Centralized public entry point
+- Availability Zones
+- Defense-in-Depth approach
 
-```
-terraform apply
+Current Limitations
+
+- No Azure Firewall
+- No Azure DDoS Protection Standard
+- No Private DNS
+- No Azure Policy
+- No Azure Monitor integration
+
+---
+
+# 📌 Design Decisions
+
+| Decision | Rationale |
+|----------|-----------|
+| Azure Bastion | Secure remote administration |
+| Load Balancer | Single controlled public endpoint |
+| Availability Zones | Improve workload resilience |
+| NSGs | Fine-grained traffic filtering |
+| Bicep | Azure-native Infrastructure as Code |
+
+---
+
+# ⚖️ Architecture Trade-Offs
+
+| Decision | Benefit | Trade-off |
+|----------|----------|-----------|
+| Azure Bastion | Secure administration | Additional cost |
+| Load Balancer | High availability | Added infrastructure complexity |
+| Availability Zones | Improved resilience | Higher deployment cost |
+| Bicep | Native Azure integration | Azure-specific language |
+
+---
+
+# 🚀 Production Evolution Roadmap
+
+```text
+Secure Connectivity
+        │
+        ▼
+Monitoring
+        │
+        ▼
+Governance
+        │
+        ▼
+Automation
+        │
+        ▼
+Landing Zone Integration
 ```
 
 ---
 
-# 📖 Documentation
+## Phase 1 — Observability
 
-Detailed architecture analysis and security assessment are available in:
-
-```
-docs/
-```
-
-The documentation includes:
-
-* Architecture analysis
-* Security evaluation
-* Threat modeling
-* Operational troubleshooting
-* Architecture decision records (ADR)
+- Azure Monitor
+- Log Analytics
+- Diagnostic Settings
+- Alerts
 
 ---
 
-# 🎯 Project Purpose
+## Phase 2 — Governance
+
+- Azure Policy
+- Resource Locks
+- RBAC refinement
+- Tagging strategy
+
+---
+
+## Phase 3 — Security
+
+- Azure Firewall
+- Private DNS
+- DDoS Protection Standard
+- Defender for Cloud
+
+---
+
+## Phase 4 — Enterprise Integration
+
+- Landing Zone alignment
+- Shared Services integration
+- Centralized Monitoring
+- CI/CD pipeline
+
+---
+
+# 📚 Key Takeaways
 
 This project demonstrates:
 
-* Cloud architecture design
-* Infrastructure as Code best practices
-* Secure administrative access patterns
-* High availability design in Azure
+- Secure Azure networking
+- Infrastructure as Code with Bicep
+- Secure administrative access
+- High Availability design
+- Defense-in-Depth principles
+- Enterprise networking fundamentals
 
-It serves as a **cloud architecture case study and portfolio project**.
+---
+
+# 🔭 Future Learning Direction
+
+Future improvements may include:
+
+- Azure Firewall
+- Private Endpoints
+- Azure Policy
+- Landing Zones
+- Azure Monitor
+- Defender for Cloud
+- Hub-and-Spoke integration
+
+---
+
+# 💡 Architect's Perspective
+
+Secure connectivity is a fundamental building block of every enterprise cloud platform.
+
+This project demonstrates how networking, security and Infrastructure as Code work together to create a secure and scalable Azure foundation.
+
+While intentionally focused on core networking concepts, the architecture establishes patterns that can be extended toward enterprise landing zones, shared services and cloud-native workloads.
